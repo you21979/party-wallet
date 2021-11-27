@@ -1,0 +1,30 @@
+{
+  "name": "party-wallet",
+  "version": "0.0.1",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/you21979/party-wallet.git"
+  },
+  "author": "you21979",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/you21979/party-wallet/issues"
+  },
+  "homepage": "https://github.com/you21979/party-wallet#readme",
+  "dependencies": {
+    "bip32": "^3.0.1",
+    "bip39": "^3.0.4",
+    "bitcoinjs-lib": "^6.0.1",
+    "electrum-oldmnemonic": "^0.0.2",
+    "request": "^2.88.2",
+    "request-promise": "^4.2.6"
+  },
+  "devDependencies": {
+    "typescript": "^4.5.2"
+  }
+}
