@@ -1,4 +1,5 @@
-import { BIP32Interface, Transaction, TransactionBuilder } from "bitcoinjs-lib";
+import { BIP32Interface } from "bip32";
+import { Transaction } from "bitcoinjs-lib";
 import { CoinInfo } from "../coin/coin_spec";
 
 export interface DerivedAddress {

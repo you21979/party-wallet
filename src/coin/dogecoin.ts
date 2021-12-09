@@ -15,3 +15,5 @@ export const network: Network = {
 export const bip44 = 3;
 export const nativeAsset = 'XDP';
 export const nativeCurrency = 'DOGE';
+export const haveSegwit = false;
+export const beginBlock = 1;

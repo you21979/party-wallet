@@ -6,8 +6,7 @@
       "declaration": true,
       "rootDir": "./src",
       "types": [
-        "node",
-        "jest"
+        "node"
       ],
       "lib": [
         "ES2020"

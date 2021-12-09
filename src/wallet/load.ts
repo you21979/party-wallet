@@ -1,4 +1,3 @@
-import { Network } from "bitcoinjs-lib";
 import { BasicWallet } from "./basic_wallet";
 import { CounterWallet } from "./counter_wallet";
 import { SegwitCompatibleWallet } from "./segwit_compatible_wallet";

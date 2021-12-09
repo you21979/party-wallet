@@ -1,7 +1,8 @@
-import { BIP32Interface, fromBase58 } from 'bip32';
-import { payments, Transaction, TransactionBuilder } from 'bitcoinjs-lib';
+import { BIP32Interface } from 'bip32';
+import { payments, Psbt, Transaction } from 'bitcoinjs-lib';
 import { CoinInfo } from '../coin/coin_spec';
 import { loadCoin } from '../coin/load';
+import { fromBase58 } from '../seed/utils';
 import { DerivedAddress, SignParam, Wallet, WatchOnlyWallet } from './wallet_spec';
 
 export class BasicWallet implements Wallet {
@@ -43,6 +44,13 @@ export class BasicWallet implements Wallet {
     return this.coin;
   }
   sign(tx: Transaction, node: BIP32Interface, params: SignParam[]): string {
+    const psbt = Psbt.fromHex(tx.toHex());
+    for( const param of params ) {
+      psbt.signInput(param.vin, node.derivePath(param.hdpath));
+    }
+    return psbt.finalizeAllInputs().extractTransaction().toHex();
+  }
+/*
     const txb = TransactionBuilder.fromTransaction(tx, this.coin.network);
     for( const param of params ) {
       txb.sign({
@@ -52,5 +60,5 @@ export class BasicWallet implements Wallet {
       });
     }
     return txb.build().toHex();
-  }
+*/
 }

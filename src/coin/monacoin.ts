@@ -15,4 +15,5 @@ export const network: Network = {
 export const bip44 = 22;
 export const nativeAsset = 'XMP';
 export const nativeCurrency = 'MONA';
-
+export const haveSegwit = true;
+export const beginBlock = 1166002;

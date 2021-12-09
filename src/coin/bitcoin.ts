@@ -15,3 +15,5 @@ export const network: Network = {
 export const bip44 = 0;
 export const nativeAsset = 'XCP';
 export const nativeCurrency = 'BTC';
+export const haveSegwit = true;
+export const beginBlock = 1;

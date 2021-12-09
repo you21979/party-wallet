@@ -1,4 +1,3 @@
-import { Transaction, TransactionBuilder } from "bitcoinjs-lib";
 import { CounterBlockApi, DISPENSER_STATUS } from "./api/counterblock/counter_block_api";
 import { DerivedAddress, Wallet } from "./wallet/wallet_spec";
 

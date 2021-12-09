@@ -9,15 +9,15 @@ export interface JsonRpcError {
   code: number;
 }
 
-export interface BaseResult {
+export interface ResultBase {
   id: number;
   jsonrpc: '2.0';
   error?: JsonRpcError;
 };
 
-export interface BaseParam {};
+export interface ParamBase {};
 
-export const jsonRpcProxy = async<T extends BaseResult>(uri: string, timeout: number, id: number, method: string, params: BaseParam): Promise<T> => {
+export const jsonRpcProxy = async<T extends ResultBase>(uri: string, timeout: number, id: number, method: string, params: ParamBase): Promise<T> => {
   const data = {
     method,
     params,
@@ -25,9 +25,12 @@ export const jsonRpcProxy = async<T extends BaseResult>(uri: string, timeout: nu
   const res = await jsonRpc<T>(uri, timeout, id, 'proxy_to_counterpartyd', data);
   if( res.error ){
     if( res.error.data ){
-      const data = JSON.parse(res.error.data.message);
-      console.log(data);
-      throw new Error(data.message);
+      try{
+        const data = JSON.parse(res.error.data.message);
+        throw new Error(data.message);
+      }catch(e){
+        throw new Error(res.error.data.message);
+      }
     }
     throw new Error(res.error.message);
   }

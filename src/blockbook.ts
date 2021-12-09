@@ -2,7 +2,7 @@ import * as api from './api/blockbook/blockbook_api'
 
 export class BlockBook {
   constructor(private readonly uri: string) {}
-  async sendTx(rawtx: string): Promise<string> {
+  async sendTx(rawtx: string): Promise<api.ResultSendTx> {
     return api.sendtx(this.uri, rawtx);
   }
   async utxo(address: string): Promise<api.Utxo[]> {
