@@ -15,7 +15,7 @@ const getDispenserList = async(sinceBlock: number, limitBlock: number, currentBl
     }
   }
   const f = new CreateFilter().
-    addEq('status', 0).
+    //addEq('status', 0).
     addRange(currentBlock, sinceBlock, limitBlock);
 
   const cb = new CounterBlockApi('https://monapa.electrum-mona.org/_api');
@@ -51,16 +51,35 @@ const getCurrentBlock = async(modifyBlock: number = 0): Promise<number> => {
   return res.backend.blocks - modifyBlock;
 }
 
+const getStatus = (status: number): string => {
+  switch(status){
+    case 0: return `open (${status})`;
+    case 10: return `close (${status})`;
+  }
+  return `? (${status})`;
+}
+
 const proc = async(currentBlock: number, sinceBlock: number, limitBlock: number = 100): Promise<number> => {
   const res = await getDispenserList(sinceBlock, limitBlock, currentBlock);
   if(res.dispensers.length){
     const items = res.dispensers.map(d => {
       return {
-        value: d.satoshirate * 1e-8,
-        ...d,
+        address: d.source,
+        status: getStatus(d.status),
+        price: (d.satoshirate * 1e-8).toFixed(2),
+        asset: d.asset,
+        give_quantity: d.give_quantity,
+        quantity: `${d.give_remaining} / ${d.escrow_quantity}`,
+        hash: d.tx_hash,
+        index: d.tx_index,
+        block: d.block_index,
       }
     });
     log(items);
+  }else{
+    if(sinceBlock !== res.nextSince){
+      log(`empty ${sinceBlock} - ${res.nextSince}`);
+    }
   }
   return res.nextSince;
 }
@@ -80,23 +99,25 @@ const main = async(argv: string[]) => {
     since: blockstart,
   };
   do {
+    put('.');
     try{
       ctx.upTime = process.uptime();
       const currentBlock = await getCurrentBlock(modifyBlock);
       if( ctx.currentBlock != currentBlock ){
         log('new block ' + currentBlock + ' -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=');
+        await sleep((3) * 1000);
       }
       ctx.currentBlock = currentBlock
     }catch(e){
+      console.log('error 1');
       continue;
     }
-    put('.');
     try{
       ctx.since = await proc(ctx.currentBlock, ctx.since, 100);
       const deltaTime = process.uptime() - ctx.upTime;
       await sleep((5 - deltaTime) * 1000);
     }catch(e){
-      log('error');
+      log('error 2');
       const deltaTime = process.uptime() - ctx.upTime;
       await sleep((1 - deltaTime) * 1000);
     }

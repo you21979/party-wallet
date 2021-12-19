@@ -20,16 +20,17 @@
   },
   "homepage": "https://github.com/you21979/party-wallet#readme",
   "dependencies": {
+    "axios": "^0.24.0",
     "bip32": "^3.0.1",
     "bip39": "^3.0.4",
     "bitcoinjs-lib": "^6.0.1",
     "electrum-mnemonic": "^2.0.0",
     "electrum-oldmnemonic": "^0.0.2",
-    "request": "^2.88.2",
-    "request-promise": "^4.2.6",
+    "json-bigint": "^1.0.0",
     "tiny-secp256k1": "^2.1.2"
   },
   "devDependencies": {
+    "@types/json-bigint": "^1.0.1",
     "@types/node": "^16.11.11",
     "typescript": "^4.5.2"
   }
